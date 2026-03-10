@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<div class="d-flex flex-column align-items-center">
+    <form method="POST">
+        <h5 class="mb-3"><i class="fa fa-user"></i> Meu perfil</h5>
+        {% csrf_token %}
+
+        <div class="card mb-4">
+            <div>
+
+
+                <label class="form-label">Nome</label>
+                <input type="text" name="first_name" class="form-control" value="{{request.user.first_name}}">
+
+                <br>
+
+                <label class="form-label">Sobrenome</label>
+                <input type="text" name="last_name" class="form-control" value="{{request.user.last_name}}">
+
+                <br>
+
+                <label class="form-label">CPF</label>
+                <input type="text" name="cpf" class="form-control" value="{{request.user.cpf}}">
+
+                <br>
+
+                <label class="form-label">Data de nascimento</label>
+                <input type="date" name="data_nasc" class="form-control"
+                    value="{{request.user.data_nasc|date:'Y-m-d'}}">
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div>
+
+                <h5 class="mb-3">Autenticação</h5>
+
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="{{request.user.email}}" disabled>
+
+                <br>
+
+                <label class="form-label">Nova senha</label>
+                <input type="password" name="password" class="form-control" placeholder="Digite uma nova senha">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success px-4">
+                Atualizar dados
+            </button>
+        </div>
+
+
+
+    </form>
+    <script src="https://unpkg.com/imask"></script>
+
+    <script>
+        IMask(
+            document.querySelector('[name="cpf"]'),
+            { mask: '000.000.000-00' }
+        )
+    </script>
+    <div class="text-center mt-3">
+        <a href="#">Solicitar exclusão de conta</a> |
+        <a href="#">Suporte</a>
+    </div>
+
+</div>
+
+{% endblock %}

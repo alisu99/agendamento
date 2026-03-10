@@ -5,8 +5,9 @@ from django.db import models
 
 
 class User(AbstractUser):
-    cpf = models.CharField(max_length=11, unique=True)
+    cpf = models.CharField(max_length=20, unique=True)
     data_nasc = models.DateField(null=True, blank=True)
+    telefone = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.username} - {self.cpf}"

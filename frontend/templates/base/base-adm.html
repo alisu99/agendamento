@@ -21,8 +21,8 @@
             </div>
 
             <div class="nav-links desktop-menu">
-                <a href="/"><i class="fa fa-home"></i> Início</a>
-                <a href="{% url 'meus-agendamentos' %}"><i class="fa fa-calendar"></i> Histórico</a>
+                <a href="{% url 'agendamentos' %}"><i class="fa fa-calendar"></i> Agenda</a>
+                
                 <a href="{% url 'meu-perfil' %}"><i class="fa fa-user"></i> {{request.user.get_full_name}}</a>
 
                 <form action="{% url 'logout' %}" method="post" style="width: max-content;">
