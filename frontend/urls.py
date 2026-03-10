@@ -1,0 +1,10 @@
+from django.urls import path
+from .views import *
+
+
+urlpatterns = [
+    path("", index, name="index"),
+    path("horarios/", horarios_disponiveis, name="horarios"),
+    path("meus-agendamentos/", historico, name="meus-agendamentos"),
+    path("cancelar/<int:id>", cancelar_agendamento, name="cancelar"),
+]

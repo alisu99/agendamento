@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico | {{request.user.get_full_name}}</title>
+</head>
+
+<body>
+
+
+    <header>
+        <nav class="navbar">
+            <h2>Arena AGAS</h2>
+            <div>
+                <div class="nav-link"><a href="/">Início</a></div>
+                <div class="nav-link"><a href="">Perfil</a></div>
+            </div>
+        </nav>
+    </header>
+
+    <div>
+        {% for h in historico %}
+            <div>
+                <div>{{h.usuario.get_full_name}}</div>
+                <div>{{h.data}}</div>
+                <div>{{h.horario}}</div>
+                <div>{{h.quadra}}</div>
+                <a href="{% url 'cancelar' h.id %}">Cancelar agendamento</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
