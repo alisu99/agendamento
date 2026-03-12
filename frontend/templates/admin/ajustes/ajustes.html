@@ -1,0 +1,279 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<title>Ajustes</title>
+
+<div class="d-flex flex-column align-items-center">
+
+    <form method="POST" id="form-ajustes">
+        {% csrf_token %}
+
+        <h5 class="mb-3"><i class="fa fa-cog"></i> Ajustes</h5>
+
+        <!-- HORÁRIOS -->
+
+        <div class="card mb-4 p-3">
+
+            <h5 class="mb-3">Horários</h5>
+
+            <small>Início - Fim</small>
+
+            <div id="lista-horarios">
+
+                {% for hora in horarios %}
+
+                <div class="d-flex gap-2 mb-2 horario-row">
+
+                    <input type="hidden" name="hora_id[]" value="{{hora.id}}">
+
+                    <input type="time" name="hora_inicio[]" class="form-control" value="{{hora.hora_inicio}}">
+
+                    <input type="time" name="hora_fim[]" class="form-control" value="{{hora.hora_fim}}">
+
+                    <button type="button" class="btn btn-danger delete-hora" data-id="{{hora.id}}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <hr>
+
+            <h6>Novo horário</h6>
+
+            <div class="d-flex gap-2">
+
+                <input type="time" name="nova_hora_inicio" class="form-control">
+
+                <input type="time" name="nova_hora_fim" class="form-control">
+
+                <button type="button" id="add-hora" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUADRAS -->
+
+        <div class="card p-3">
+
+            <h5 class="mb-3">Quadras</h5>
+
+            <small>Apelido - Número</small>
+
+            <div id="lista-quadras">
+
+                {% for quadra in quadras %}
+
+                <div class="d-flex gap-2 mb-2 quadra-row">
+
+                    <input type="hidden" name="quadra_id[]" value="{{quadra.id}}">
+
+                    <input type="text" name="apelido[]" class="form-control" value="{{quadra.apelido}}"
+                        placeholder="Opcional">
+
+                    <input type="number" name="numeracao[]" class="form-control" value="{{quadra.numeracao}}">
+
+                    <button type="button" class="btn btn-danger delete-quadra" data-id="{{quadra.id}}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <hr>
+
+            <h6>Nova quadra</h6>
+
+            <div class="d-flex gap-2">
+
+                <input type="text" name="novo_apelido" class="form-control" placeholder="Opcional">
+
+                <input type="number" name="nova_numeracao" class="form-control">
+
+                <button type="button" id="add-quadra" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+
+            <button class="btn btn-success w-100">
+                Salvar alterações
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+
+    /* ------------------------
+    ADICIONAR HORÁRIO
+    ------------------------ */
+
+    document.getElementById("add-hora")?.addEventListener("click", () => {
+
+        const inicio = document.querySelector("[name=nova_hora_inicio]").value
+        const fim = document.querySelector("[name=nova_hora_fim]").value
+
+        fetch("", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `action=add_hora&inicio=${inicio}&fim=${fim}`
+        })
+            .then(r => r.json())
+            .then(data => {
+
+                const container = document.getElementById("lista-horarios")
+
+                const novaLinha = `
+<div class="d-flex gap-2 mb-2 horario-row">
+
+<input type="hidden" name="hora_id[]" value="${data.id}">
+
+<input type="time" name="hora_inicio[]" class="form-control" value="${data.inicio}">
+
+<input type="time" name="hora_fim[]" class="form-control" value="${data.fim}">
+
+<button type="button" class="btn btn-danger delete-hora" data-id="${data.id}">
+<i class="fa fa-trash"></i>
+</button>
+
+</div>
+`
+
+                container.insertAdjacentHTML("beforeend", novaLinha)
+
+            })
+
+    })
+
+
+    /* ------------------------
+    EXCLUIR HORÁRIO
+    ------------------------ */
+
+    document.addEventListener("click", function (e) {
+
+        if (e.target.closest(".delete-hora")) {
+
+            const btn = e.target.closest(".delete-hora")
+            const id = btn.dataset.id
+
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `action=delete_hora&id=${id}`
+            })
+                .then(r => r.json())
+                .then(() => {
+                    btn.closest(".horario-row").remove()
+                })
+
+        }
+
+    })
+
+
+    /* ------------------------
+    ADICIONAR QUADRA
+    ------------------------ */
+
+    document.getElementById("add-quadra")?.addEventListener("click", () => {
+
+        const apelido = document.querySelector("[name=novo_apelido]").value
+        const numeracao = document.querySelector("[name=nova_numeracao]").value
+
+        fetch("", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `action=add_quadra&apelido=${apelido}&numeracao=${numeracao}`
+        })
+            .then(r => r.json())
+            .then(data => {
+
+                const container = document.getElementById("lista-quadras")
+
+                const novaLinha = `
+<div class="d-flex gap-2 mb-2 quadra-row">
+
+<input type="hidden" name="quadra_id[]" value="${data.id}">
+
+<input type="text" name="apelido[]" class="form-control" value="${data.apelido ?? ''}" placeholder="Opcional">
+
+<input type="number" name="numeracao[]" class="form-control" value="${data.numeracao}">
+
+<button type="button" class="btn btn-danger delete-quadra" data-id="${data.id}">
+<i class="fa fa-trash"></i>
+</button>
+
+</div>
+`
+
+                container.insertAdjacentHTML("beforeend", novaLinha)
+
+            })
+
+    })
+
+
+    /* ------------------------
+    EXCLUIR QUADRA
+    ------------------------ */
+
+    document.addEventListener("click", function (e) {
+
+        if (e.target.closest(".delete-quadra")) {
+
+            const btn = e.target.closest(".delete-quadra")
+            const id = btn.dataset.id
+
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `action=delete_quadra&id=${id}`
+            })
+                .then(r => r.json())
+                .then(() => {
+                    btn.closest(".quadra-row").remove()
+                })
+
+        }
+
+    })
+
+</script>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+<title>Bem-vindo(a)!</title>
 <div class="d-flex justify-content-center">
     <form method="POST">
         {% csrf_token %}
@@ -36,15 +37,13 @@
             <hr>
             <div>
                 <div style="font-size: medium;">
-                    <i class="fa fa-calendar"></i>
+                    
                     <span id="preview-data"></span>
                 </div>
                 <div style="font-size: medium;">
-                    <i class="fa fa-clock-o"></i>
                     <span id="preview-horario"></span>
                 </div>
                 <div style="font-size: medium;">
-                    <i class="fa fa-circle"></i>
                     <span id="preview-quadra"></span>
                 </div>
 
@@ -55,6 +54,17 @@
             </div>
             <hr>
             <button type="submit" class="btn btn-success">Agendar</button>
+        </div>
+
+        <div class="card" id="step-confirmar">
+            <h5>Onde estamos?</h5>
+
+            <span class="mb-2"><i class="fa fa-place"></i> R. Alberto Leal Nunes, 1360 - Lourival Parente, Teresina - PI, 64023-450, Brasil</span>
+            
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.804704154731!2d-42.794411025424075!3d-5.135126451944823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x78e37c4f42283d1%3A0x2fd164b77515bfd7!2sArena%20Vila%20Sol!5e0!3m2!1spt-BR!2sbr!4v1773335974731!5m2!1spt-BR!2sbr"
+                style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </form>
 </div>

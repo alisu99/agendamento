@@ -8,6 +8,7 @@ from datetime import date, timedelta
 from backend.decorators import *
 from django.utils import timezone
 
+
 @login_required
 def logout_view(request):
     logout(request)
@@ -33,9 +34,16 @@ def login_view(request):
 @login_required()
 def historico(request):
     usuario = request.user
-    historico = Agendamento.objects.filter(usuario=usuario).order_by('-id')
+
+    historico = (
+        Agendamento.objects
+        .filter(usuario=usuario)
+        .select_related("quadra", "horario")
+        .order_by("-id")
+    )
+
     hoje = timezone.now().date()
-    
+
     context = {
         "historico": historico,
         "hoje": hoje,
@@ -73,7 +81,14 @@ def index(request):
             return redirect("index")
 
         Agendamento.objects.create(
-            usuario=request.user, quadra=quadra, horario=horario, data=data
+            usuario=request.user,
+            quadra=quadra,
+            horario=horario,
+            data=data,
+            quadra_nome=quadra.apelido,
+            quadra_numero=quadra.numeracao,
+            hora_inicio=horario.hora_inicio,
+            hora_fim=horario.hora_fim,
         )
 
         return redirect("meus-agendamentos")
@@ -117,15 +132,3 @@ def horarios_disponiveis(request):
         )
 
     return JsonResponse(lista, safe=False)
-
-
-@staff_required
-def agendamentos(request):
-    agendamentos = Agendamento.objects.all().order_by('-id')
-    hoje = timezone.now().date()
-
-    context = {
-        'agendamentos': agendamentos,
-        "hoje": hoje,
-    }
-    return render(request, 'admin/agendamentos.html', context)

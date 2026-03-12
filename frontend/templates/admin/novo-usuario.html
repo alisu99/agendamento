@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<title>Novo usuário</title>
+<div class="d-flex flex-column align-items-center">
+    <form method="POST">
+        <h5 class="mb-3"><i class="fa fa-plus"></i> Novo usuário</h5>
+        {% csrf_token %}
+
+        <div class="card mb-3">
+            <div>
+                <h5 class="mb-3">Autenticação</h5>
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="email@exemplo.com" required>
+                <br>
+                <label class="form-label">Nova senha</label>
+                <input type="password" name="password" class="form-control" placeholder="Digite uma senha" required>
+            </div>
+            <br>
+        </div>
+
+        <div class="card mb-3">
+            <div>
+                <label class="form-label">Nome</label>
+                <input type="text" name="first_name" class="form-control" required>
+                <br>
+                <label class="form-label">Sobrenome</label>
+                <input type="text" name="last_name" class="form-control" required>
+                <br>
+                <label class="form-label">CPF</label>
+                <input type="text" name="cpf" class="form-control">
+                <br>
+                <label class="form-label">Contato (Whatsapp)</label>
+                <input type="text" name="telefone" id="telefone" class="form-control" required>
+                <br>
+                <label class="form-label">Data de nascimento</label>
+                <input type="date" name="data_nasc" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div>
+                <h5 class="mb-3">Administrativo</h5>
+
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" checked>
+                    <label class="form-check-label" for="is_active">
+                        Ativo
+                    </label>
+                </div>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="is_staff" id="is_staff">
+                    <label class="form-check-label" for="is_staff">
+                        Administrador
+                    </label>
+                </div>
+                
+            </div>
+            <br>
+        </div>
+
+        <button type="submit" class="btn btn-success px-4 w-100">
+            Salvar
+        </button>
+    </form>
+
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        IMask(
+            document.querySelector('[name="cpf"]'),
+            { mask: '000.000.000-00' }
+        )
+
+
+        const telefoneInput = document.getElementById("telefone")
+
+        if (telefoneInput) {
+
+            telefoneInput.addEventListener("input", function () {
+
+                let numero = this.value.replace(/\D/g, "")
+
+                if (numero.length > 11) {
+                    numero = numero.slice(0, 11)
+                }
+
+                if (numero.length > 10) {
+                    numero = numero.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")
+                } else if (numero.length > 6) {
+                    numero = numero.replace(/^(\d{2})(\d{4})(\d+)/, "($1) $2-$3")
+                } else if (numero.length > 2) {
+                    numero = numero.replace(/^(\d{2})(\d+)/, "($1) $2")
+                } else {
+                    numero = numero.replace(/^(\d*)/, "($1")
+                }
+
+                this.value = numero
+
+            })
+
+        }
+    </script>
+</div>
+
+{% endblock %}

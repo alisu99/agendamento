@@ -97,7 +97,7 @@ body {
     background: white;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -121,18 +121,6 @@ body {
     color: #444;
 }
 
-.cancelar-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-}
-
-.cancelar-btn:hover {
-    background: #dc2626;
-}
 
 /* HORARIOS */
 
@@ -303,7 +291,7 @@ body {
         gap: 5px;
     }
 
-    .cancelar-btn {
+    .btn btn-danger btn-sm {
         width: 100%;
         text-align: center;
     }

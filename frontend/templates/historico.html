@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+<title>Histórico</title>
 
 <h5 class="mb-3"><i class="fa fa-calendar"></i> Meus Agendamentos</h5>
 
-
-
 {% for h in historico %}
+
 <div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -17,15 +17,28 @@
             </div>
 
             <div class="modal-body">
+
                 Tem certeza que deseja cancelar este agendamento?
                 <br><br>
+
                 <div>
-                    <div style="font-size: larger;"><i class="fa fa-calendar"></i> {{h.data}}</div>
-                    <div style="font-size: larger;"><i class="fa fa-clock-o"></i> {{h.horario.hora_inicio}} às
-                        {{h.horario.hora_fim}}</div>
-                    <div style="font-size: larger;"><i class="fa fa-circle"></i> {{h.quadra.apelido}} - Quadra
-                        {{h.quadra.numeracao}} </div>
+
+                    <div style="font-size: larger;">
+                        <i class="fa fa-calendar"></i> {{h.data}}
+                    </div>
+
+                    <div style="font-size: larger;">
+                        <i class="fa fa-clock-o"></i>
+                        {{h.hora_inicio}} às {{h.hora_fim}}
+                    </div>
+
+                    <div style="font-size: larger;">
+                        <i class="fa fa-circle"></i>
+                        {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
+                    </div>
+
                 </div>
+
             </div>
 
             <div class="modal-footer">
@@ -43,28 +56,46 @@
         </div>
     </div>
 </div>
-<div class="card d-flex flex-row justify-content-between align-items-center">
+
+
+<div class="card d-flex flex-row justify-content-between align-items-center mb-2 p-3">
 
     <div class="agendamento-info">
 
         <div>
-            <div style="font-size: larger;"><i class="fa fa-calendar"></i> {{h.data}}</div>
-            <div style="font-size: larger;"><i class="fa fa-clock-o"></i> {{h.horario.hora_inicio}} às
-                {{h.horario.hora_fim}}</div>
-            <div style="font-size: larger;"><i class="fa fa-circle"></i> {{h.quadra.apelido}} - Quadra
-                {{h.quadra.numeracao}} </div>
+
+            <div style="font-size: larger;">
+                <i class="fa fa-calendar"></i> {{h.data}}
+            </div>
+
+            <div style="font-size: larger;">
+                <i class="fa fa-clock-o"></i>
+                {{h.hora_inicio}} às {{h.hora_fim}}
+            </div>
+
+            <div style="font-size: larger;">
+                <i class="fa fa-circle"></i>
+                {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
+            </div>
+
         </div>
 
     </div>
 
     <div>
+
         {% if h.data >= hoje %}
-        <button class="cancelar-btn" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
+
+        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
             Cancelar
         </button>
+
         {% else %}
+
         <span class="text-muted">Concluído</span>
+
         {% endif %}
+
     </div>
 
 </div>
@@ -74,8 +105,5 @@
 <p>Você não possui agendamentos.</p>
 
 {% endfor %}
-
-
-
 
 {% endblock %}

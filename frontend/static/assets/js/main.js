@@ -112,9 +112,14 @@ function ativarEventoHorarios() {
             const dataTexto = formatarDataBR(dataInput.value)
             const quadraTexto = quadraSelect.options[quadraSelect.selectedIndex].text
 
-            document.getElementById("preview-data").textContent = dataTexto
-            document.getElementById("preview-horario").textContent = horarioTexto
-            document.getElementById("preview-quadra").textContent = quadraTexto
+            document.getElementById("preview-data").innerHTML =
+                `<i class="fa fa-calendar"></i> ${dataTexto}`
+
+            document.getElementById("preview-horario").innerHTML =
+                `<i class="fa fa-clock-o"></i> ${horarioTexto}`
+
+            document.getElementById("preview-quadra").innerHTML =
+                `<i class="fa fa-circle"></i> ${quadraTexto}`
 
             confirmar.disabled = false
 

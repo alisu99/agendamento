@@ -8,9 +8,5 @@ urlpatterns = [
     path("meus-agendamentos/", historico, name="meus-agendamentos"),
     path("cancelar/<int:id>", cancelar_agendamento, name="cancelar"),
     path("login/", login_view, name="login"),
-    path("logout/", logout_view, name="logout"),
-
-    # admin
-    path("agendamentos/", agendamentos, name="agendamentos"),
-    
+    path("logout/", logout_view, name="logout"),    
 ]
