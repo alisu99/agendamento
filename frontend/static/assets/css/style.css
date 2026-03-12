@@ -18,6 +18,21 @@ body {
     bottom: 0;
 } */
 
+.horario {
+    display: block;
+    margin: 8px 0;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: aparecerHorario 0.35s ease forwards;
+}
+
+@keyframes aparecerHorario {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* NAVBAR */
 
 .navbar-custom {
@@ -148,7 +163,7 @@ body {
     .formulario {
         background: white;
         box-shadow: 0px 0px 6px 0px #0000002e;
-        border-radius: 5px;
+        border-radius: 10px;
     }
 
     .mobile-menu {
@@ -251,6 +266,8 @@ body {
 
     .navbar-custom {
         padding: 15px 20px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 
     .container-navbar {

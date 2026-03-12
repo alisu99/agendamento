@@ -4,6 +4,9 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+def erro_403(request, exception):
+    return render(request, "admin/403.html", status=403)
+
 def criar_conta(request):
 
     if request.method == "POST":
@@ -14,6 +17,7 @@ def criar_conta(request):
         cpf = request.POST.get("cpf")
         data_nasc = request.POST.get("data_nasc")
         password = request.POST.get("password")
+        telefone = request.POST.get("telefone")
 
         if User.objects.filter(email=email).exists():
             return redirect("criar_conta")
@@ -28,7 +32,8 @@ def criar_conta(request):
             first_name=first_name,
             last_name=last_name,
             cpf=cpf,
-            data_nasc=data_nasc
+            data_nasc=data_nasc,
+            telefone=telefone,
         )
         return redirect("login")
 
@@ -43,12 +48,9 @@ def meu_perfil(request):
 
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
-
-        cpf = request.POST.get("cpf")
-        user.cpf = cpf.replace(".", "").replace("-", "")
-
+        user.telefone = request.POST.get("telefone")
+        user.cpf = request.POST.get("cpf")
         user.data_nasc = request.POST.get("data_nasc")
-
         password = request.POST.get("password")
 
         if password:

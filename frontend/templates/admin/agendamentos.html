@@ -1,4 +1,4 @@
-{% extends 'base/base-adm.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
 
@@ -25,6 +25,7 @@
                         {{h.horario.hora_fim}}</div>
                     <div style="font-size: larger;"><i class="fa fa-circle"></i> {{h.quadra.apelido}} - Quadra
                         {{h.quadra.numeracao}} </div>
+                    <div style="font-size: larger;"><i class="fa fa-user"></i> {{h.usuario.get_full_name}} | {{h.usuario.telefone|default_if_none:''}} </div>
                 </div>
             </div>
 
@@ -53,21 +54,20 @@
                 {{h.horario.hora_fim}}</div>
             <div style="font-size: larger;"><i class="fa fa-circle"></i> {{h.quadra.apelido}} - Quadra
                 {{h.quadra.numeracao}} </div>
-            <div style="font-size: larger;"><i class="fa fa-user"></i> {{h.usuario.get_full_name}} - {{h.usuario.telefone|default_if_none:''}} </div>
+            <div style="font-size: larger;"><i class="fa fa-user"></i> {{h.usuario.get_full_name}} | {{h.usuario.telefone|default_if_none:''}} </div>
         </div>
 
     </div>
 
     <div>
-        {% now "Y-m-d" as hoje %}
-        {% if h.data|date:"Y-m-d" >= hoje %}
+    {% if h.data >= hoje %}
         <button class="cancelar-btn" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
             Cancelar
         </button>
-        {% else %}
-        <span class="text-muted">Agendamento finalizado</span>
-        {% endif %}
-    </div>
+    {% else %}
+        <span class="text-muted">Concluído</span>
+    {% endif %}
+</div>
 
 </div>
 

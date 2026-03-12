@@ -36,6 +36,9 @@
                 <label class="form-label">CPF</label>
                 <input type="text" name="cpf" class="form-control mb-3" required>
 
+                <label class="form-label">Telefone (Whatsapp)</label>
+                <input type="text" name="telefone" id="telefone" class="form-control mb-3" required>
+
                 <label class="form-label">Data de nascimento</label>
                 <input type="date" name="data_nasc" class="form-control mb-3">
 
@@ -56,7 +59,43 @@
         </div>
 
     </div>
+    <script src="https://unpkg.com/imask"></script>
 
+    <script>
+        IMask(
+            document.querySelector('[name="cpf"]'),
+            { mask: '000.000.000-00' }
+        )
+
+
+        const telefoneInput = document.getElementById("telefone")
+
+        if (telefoneInput) {
+
+            telefoneInput.addEventListener("input", function () {
+
+                let numero = this.value.replace(/\D/g, "")
+
+                if (numero.length > 11) {
+                    numero = numero.slice(0, 11)
+                }
+
+                if (numero.length > 10) {
+                    numero = numero.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")
+                } else if (numero.length > 6) {
+                    numero = numero.replace(/^(\d{2})(\d{4})(\d+)/, "($1) $2-$3")
+                } else if (numero.length > 2) {
+                    numero = numero.replace(/^(\d{2})(\d+)/, "($1) $2")
+                } else {
+                    numero = numero.replace(/^(\d*)/, "($1")
+                }
+
+                this.value = numero
+
+            })
+
+        }
+    </script>
 </body>
 
 </html>

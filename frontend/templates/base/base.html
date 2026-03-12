@@ -23,7 +23,20 @@
             <div class="nav-links desktop-menu">
                 <a href="/"><i class="fa fa-home"></i> Início</a>
                 <a href="{% url 'meus-agendamentos' %}"><i class="fa fa-calendar"></i> Histórico</a>
-                <a href="{% url 'meu-perfil' %}"><i class="fa fa-user"></i> {{request.user.get_full_name}}</a>
+
+                {% if request.user.is_staff %}
+                <a href="{% url 'agendamentos' %}"><i class="fa fa-calendar"></i> Agendamentos</a>
+                {% endif %}
+
+                {% if request.user.is_staff %}
+                <a href=""><i class="fa fa-cog"></i> Ajustes</a>
+                {% endif %}
+
+                {% if request.user.is_staff %}
+                <a href=""><i class="fa fa-users"></i> Usuários</a>
+                {% endif %}
+
+                <a href="{% url 'meu-perfil' %}"><i class="fa fa-user"></i> {{request.user.get_full_name}} {% if request.user.is_staff %}- ADMIN {% endif %}</a>
 
                 <form action="{% url 'logout' %}" method="post" style="width: max-content;">
                     {% csrf_token %}
@@ -42,7 +55,7 @@
     <div class="mobile-menu" id="mobileMenu">
 
         <div class="menu-header">
-            <strong>{{request.user.get_full_name}}</strong>
+            <strong>{{request.user.get_full_name}} {% if request.user.is_staff %}- ADMIN {% endif %}</strong>
         </div>
 
         <a href="/">
@@ -52,6 +65,25 @@
         <a href="{% url 'meus-agendamentos' %}">
             <i class="fa fa-calendar"></i> Histórico
         </a>
+
+
+        {% if request.user.is_staff %}
+        <a href="{% url 'agendamentos' %}">
+            <i class="fa fa-calendar"></i> Agendamentos
+        </a>
+        {% endif %}
+
+        {% if request.user.is_staff %}
+        <a href="">
+            <i class="fa fa-cog"></i> Ajustes
+        </a>
+        {% endif %} 
+
+        {% if request.user.is_staff %}
+        <a href="">
+            <i class="fa fa-users"></i> Usuários
+        </a>
+        {% endif %}    
 
         <a href="{% url 'meu-perfil' %}">
             <i class="fa fa-user"></i> Meu perfil

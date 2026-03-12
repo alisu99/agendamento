@@ -58,13 +58,12 @@
     </div>
 
     <div>
-        {% now "Y-m-d" as hoje %}
-        {% if h.data|date:"Y-m-d" >= hoje %}
+        {% if h.data >= hoje %}
         <button class="cancelar-btn" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
             Cancelar
         </button>
         {% else %}
-        <span class="text-muted">Agendamento finalizado</span>
+        <span class="text-muted">Concluído</span>
         {% endif %}
     </div>
 

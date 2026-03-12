@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from backend.models import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from datetime import date, timedelta
+from backend.decorators import *
+from django.utils import timezone
 
 @login_required
 def logout_view(request):
@@ -32,9 +34,11 @@ def login_view(request):
 def historico(request):
     usuario = request.user
     historico = Agendamento.objects.filter(usuario=usuario).order_by('-id')
-
+    hoje = timezone.now().date()
+    
     context = {
         "historico": historico,
+        "hoje": hoje,
     }
 
     return render(request, "historico.html", context)
@@ -115,11 +119,13 @@ def horarios_disponiveis(request):
     return JsonResponse(lista, safe=False)
 
 
-@login_required
+@staff_required
 def agendamentos(request):
-    agendamentos = Agendamento.objects.all()
+    agendamentos = Agendamento.objects.all().order_by('-id')
+    hoje = timezone.now().date()
 
     context = {
         'agendamentos': agendamentos,
+        "hoje": hoje,
     }
     return render(request, 'admin/agendamentos.html', context)
