@@ -74,13 +74,15 @@ def index(request):
             return redirect("index")
 
         existe = Agendamento.objects.filter(
-            quadra=quadra, horario=horario, data=data
+            quadra=quadra,
+            horario=horario,
+            data=data
         ).exists()
 
         if existe:
             return redirect("index")
 
-        Agendamento.objects.create(
+        agendamento = Agendamento.objects.create(
             usuario=request.user,
             quadra=quadra,
             horario=horario,
@@ -91,14 +93,13 @@ def index(request):
             hora_fim=horario.hora_fim,
         )
 
-        return redirect("meus-agendamentos")
+        return redirect("pagar_pix", agendamento_id=agendamento.id)
 
     context = {
         "quadras": quadras,
     }
 
     return render(request, "index.html", context)
-
 
 @login_required
 def cancelar_agendamento(request, id):

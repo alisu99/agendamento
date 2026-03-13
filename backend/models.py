@@ -30,19 +30,21 @@ class Horario(models.Model):
 
 
 class Agendamento(models.Model):
+
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    # FK apenas para relacionamento
     quadra = models.ForeignKey(Quadra, on_delete=models.SET_NULL, null=True, blank=True)
     horario = models.ForeignKey(Horario, on_delete=models.SET_NULL, null=True, blank=True)
 
-    # SNAPSHOT (histórico)
     quadra_nome = models.CharField(max_length=255, blank=True, null=True)
     quadra_numero = models.IntegerField(null=True, blank=True)
     hora_inicio = models.TimeField(null=True, blank=True)
     hora_fim = models.TimeField(null=True, blank=True)
 
     data = models.DateField(null=True, blank=True)
+
+    pago = models.BooleanField(default=False)
+    payment_id = models.CharField(max_length=200, null=True, blank=True)
 
     class Meta:
         unique_together = ('quadra', 'horario', 'data')

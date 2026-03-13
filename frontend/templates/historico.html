@@ -89,6 +89,9 @@
         <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
             Cancelar
         </button>
+        <a href="{% url 'pagar_pix' h.id %}" class="btn btn-success btn-sm">
+            Pagar com PIX
+        </a>
 
         {% else %}
 
