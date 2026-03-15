@@ -196,20 +196,16 @@ from django.http import JsonResponse
 @staff_required
 def ajustes(request):
 
+    descanso = Descanso.objects.first()
+
     if request.method == "POST":
 
         action = request.POST.get("action")
 
-        # ----------------
-        # DELETE HORARIO
-        # ----------------
         if action == "delete_hora":
             Horario.objects.filter(id=request.POST.get("id")).delete()
             return JsonResponse({"status": "ok"})
 
-        # ----------------
-        # ADD HORARIO
-        # ----------------
         if action == "add_hora":
             inicio = request.POST.get("inicio")
             fim = request.POST.get("fim")
@@ -226,16 +222,10 @@ def ajustes(request):
                 "fim": hora.hora_fim
             })
 
-        # ----------------
-        # DELETE QUADRA
-        # ----------------
         if action == "delete_quadra":
             Quadra.objects.filter(id=request.POST.get("id")).delete()
             return JsonResponse({"status": "ok"})
 
-        # ----------------
-        # ADD QUADRA
-        # ----------------
         if action == "add_quadra":
             apelido = request.POST.get("apelido")
             numeracao = request.POST.get("numeracao")
@@ -252,11 +242,7 @@ def ajustes(request):
                 "numeracao": quadra.numeracao
             })
 
-        # ----------------
-        # UPDATE NORMAL
-        # ----------------
 
-        # atualizar horarios
         ids = request.POST.getlist("hora_id[]")
         inicios = request.POST.getlist("hora_inicio[]")
         fins = request.POST.getlist("hora_fim[]")
@@ -267,7 +253,6 @@ def ajustes(request):
                 hora_fim=fins[i]
             )
 
-        # atualizar quadras
         quadra_ids = request.POST.getlist("quadra_id[]")
         apelidos = request.POST.getlist("apelido[]")
         numeros = request.POST.getlist("numeracao[]")
@@ -278,11 +263,24 @@ def ajustes(request):
                 numeracao=numeros[i]
             )
 
-        return redirect("ajustes")
+        dias_semana = request.POST.getlist("dias_semana")
+        descanso = Descanso.objects.first()
+        if descanso:
+            descanso.dias_semana = dias_semana
+            descanso.save()
+        else:
+            Descanso.objects.create(
+                dias_semana=dias_semana
+            )
 
+        return redirect("ajustes")
+    
+    descanso = Descanso.objects.first()
     context = {
         "horarios": Horario.objects.all(),
-        "quadras": Quadra.objects.all()
+        "quadras": Quadra.objects.all(),
+        "descanso": descanso,
+        "dias_semana": Descanso.DIAS_SEMANA
     }
 
     return render(request, "admin/ajustes/ajustes.html", context)

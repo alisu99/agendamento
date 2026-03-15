@@ -6,67 +6,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Criar conta | AGAS</title>
+    <title>Criar conta | Arena Vila Sol</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{% static 'assets/img/logo.png' %}">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: #f6f6f6;
+        }
+
+        /* layout geral */
+
+        .register-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* lado visual */
+
+        .register-hero {
+            flex: 1;
+            background: linear-gradient(135deg, darkorange, #ffb347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            padding: 40px;
+        }
+
+        .register-hero img {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .register-hero h2 {
+            font-weight: 600;
+        }
+
+        /* formulário */
+
+        .register-form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 520px;
+            background: white;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .register-title {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .btn-register {
+            background: darkorange;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .btn-register:hover {
+            background: #e26a00;
+        }
+
+        .login-link a {
+            color: darkorange;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVO */
+
+        @media(max-width:768px) {
+
+            .register-hero {
+                display: none;
+            }
+
+            .register-form {
+                padding: 10px;
+            }
+
+
+            body {
+                background: linear-gradient(135deg, darkorange, #ffb347);
+            }
+
+            .register-card {
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+            }
+
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <div class="container d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <div class="register-container">
 
-        <div class="formulario p-4">
+        <!-- lado visual -->
 
-            <h4 class="text-center mb-4">Criar conta</h4>
+        <div class="register-hero">
 
-            <form method="POST">
+            <img src="{% static 'assets/img/logo.png' %}">
 
-                {% csrf_token %}
+            <h2>Arena Vila Sol</h2>
 
-                <label class="form-label">Nome</label>
-                <input type="text" name="first_name" class="form-control mb-3" required>
 
-                <label class="form-label">Sobrenome</label>
-                <input type="text" name="last_name" class="form-control mb-3" required>
+        </div>
 
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control mb-3" required>
+        <!-- formulário -->
 
-                <label class="form-label">CPF</label>
-                <input type="text" name="cpf" class="form-control mb-3" required>
+        <div class="register-form">
 
-                <label class="form-label">Telefone (Whatsapp)</label>
-                <input type="text" name="telefone" id="telefone" class="form-control mb-3" required>
+            <div class="register-card">
 
-                <label class="form-label">Data de nascimento</label>
-                <input type="date" name="data_nasc" class="form-control mb-3">
+                <div class="register-title">
+                    <i class="fa fa-user-plus"></i> Criar conta
+                </div>
 
-                <label class="form-label">Senha</label>
-                <input type="password" name="password" class="form-control mb-3" required>
+                <form method="POST">
 
-                <button type="submit" class="btn btn-success w-100">
-                    Criar conta
-                </button>
+                    {% csrf_token %}
 
-            </form>
+                    <div class="row">
 
-            <div class="text-center mt-3">
-                Já tem conta?
-                <a href="{% url 'login' %}">Entrar</a>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-user"></i> Nome</label>
+                            <input type="text" name="first_name" class="form-control mb-3" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-user"></i> Sobrenome</label>
+                            <input type="text" name="last_name" class="form-control mb-3" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="email" name="email" class="form-control mb-3" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-id-card"></i> CPF</label>
+                            <input type="text" name="cpf" class="form-control mb-3" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-whatsapp"></i> Whatsapp</label>
+                            <input type="text" name="telefone" id="telefone" class="form-control mb-3" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fa fa-calendar"></i> Nascimento</label>
+                            <input type="date" name="data_nasc" class="form-control mb-3">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label"><i class="fa fa-lock"></i> Senha</label>
+                            <input type="password" name="password" class="form-control mb-4" required>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-register w-100">
+
+                        <i class="fa fa-check"></i>
+                        Criar conta
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-4 login-link">
+
+                    <small class="text-muted">
+                        Já tem conta?
+                    </small>
+
+                    <br>
+
+                    <a href="{% url 'login' %}">
+                        Entrar
+                    </a>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
+
     <script src="https://unpkg.com/imask"></script>
 
     <script>
+
         IMask(
             document.querySelector('[name="cpf"]'),
             { mask: '000.000.000-00' }
         )
-
 
         const telefoneInput = document.getElementById("telefone")
 
@@ -95,7 +260,9 @@
             })
 
         }
+
     </script>
+
 </body>
 
 </html>

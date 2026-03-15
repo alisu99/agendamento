@@ -134,7 +134,37 @@ function ativarEventoHorarios() {
     })
 
 }
+dataInput.addEventListener("change", () => {
 
+    const data = dataInput.value
+    const aviso = document.getElementById("aviso-descanso")
+
+    fetch(`/verificar-descanso/?data=${data}`)
+        .then(res => res.json())
+        .then(resp => {
+
+            if (resp.descanso) {
+
+                aviso.classList.remove("d-none")
+
+                quadraSelect.disabled = true
+
+                resetarHorarios()
+                resetarConfirmacao()
+
+            } else {
+
+                aviso.classList.add("d-none")
+
+                quadraSelect.disabled = false
+
+                document.getElementById("step-quadra").classList.remove("disabled")
+
+            }
+
+        })
+
+})
 
 /* DATA ALTERADA */
 

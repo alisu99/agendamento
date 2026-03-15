@@ -13,11 +13,11 @@
 
         <!-- HORÁRIOS -->
 
-        <div class="card mb-4 p-3">
+        <div class="card p-3">
 
             <h5 class="mb-3">Horários</h5>
 
-            <small>Início - Fim</small>
+            <small class="text-muted mb-3">Início - Fim</small>
 
             <div id="lista-horarios">
 
@@ -66,7 +66,7 @@
 
             <h5 class="mb-3">Quadras</h5>
 
-            <small>Apelido - Número</small>
+            <small class="text-muted mb-3">Apelido - Número</small>
 
             <div id="lista-quadras">
 
@@ -104,6 +104,34 @@
                 <button type="button" id="add-quadra" class="btn btn-success">
                     <i class="fa fa-plus"></i>
                 </button>
+
+            </div>
+
+        </div>
+
+        <div class="card p-4 shadow-sm">
+
+            <h5 class="mb-3">
+             Descanso semanal
+            </h5>
+
+            <p class="text-muted mb-3">
+                Selecione os dias em que a arena ficará fechada.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                {% for valor, nome in dias_semana %}
+
+                <label class="descanso-chip">
+
+                    <input type="checkbox" name="dias_semana" value="{{valor}}" {% if descanso and valor in descanso.dias_semana %}checked{% endif %}>
+
+                    <span>{{nome}}</span>
+
+                </label>
+
+                {% endfor %}
 
             </div>
 

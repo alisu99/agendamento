@@ -4,19 +4,8 @@ body {
     font-family: "Poppins", sans-serif;
     background: #f5f7fa;
     margin: 0;
+    background: gainsboro;
 }
-/* 
-.footer {
-    background: #1f2937;
-    color: white;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-} */
 
 .horario {
     display: block;
@@ -36,7 +25,7 @@ body {
 /* NAVBAR */
 
 .navbar-custom {
-    background: #1f2937;
+    background: darkorange;
     color: white;
     padding: 18px 40px;
 }
@@ -48,8 +37,42 @@ body {
 }
 
 .logo {
-    font-size: 22px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
     font-weight: 600;
+}
+
+.logo img {
+    max-width: 45px;
+}
+
+.descanso-chip {
+    cursor: pointer;
+}
+
+.descanso-chip input {
+    display: none;
+}
+
+.descanso-chip span {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+    font-size: 14px;
+    transition: all .2s ease;
+}
+
+.descanso-chip input:checked+span {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.descanso-chip span:hover {
+    background: #e9ecef;
 }
 
 .nav-links {
@@ -62,6 +85,7 @@ body {
     color: white;
     text-decoration: none;
     font-size: 15px;
+    /* text-shadow: 0px 0px 3px #00000099; */
 }
 
 .nav-links a:hover {
@@ -98,7 +122,8 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+    border: none;
 }
 
 /* HISTORICO */
@@ -165,15 +190,35 @@ body {
     cursor: pointer;
 }
 
+.card-usuario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
 /* esconder menu desktop no mobile */
 @media(max-width:768px) {
+
+    .card-usuario {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .card-utils {
+        width: 100%;
+        text-align: end;
+    }
 
     .nav-links {
         display: none;
     }
 
     .mobile-user {
-        display: block;
+        display: flex;
+        height: 40px;
+        align-items: center;
     }
 
     /* bottom sheet */

@@ -67,6 +67,25 @@ def index(request):
         horario = get_object_or_404(Horario, id=horario_id)
 
         data_obj = date.fromisoformat(data)
+
+        descanso = Descanso.objects.first()
+
+        if descanso and descanso.dias_semana:
+
+            mapa = {
+                "mon": "seg",
+                "tue": "ter",
+                "wed": "qua",
+                "thu": "qui",
+                "fri": "sex",
+                "sat": "sab",
+                "sun": "dom",
+            }
+
+            dia_semana = mapa[data_obj.strftime("%a").lower()]
+
+            if dia_semana in descanso.dias_semana:
+                return redirect("index")
         hoje = date.today()
         limite = hoje + timedelta(days=10)
 
@@ -78,6 +97,7 @@ def index(request):
             horario=horario,
             data=data
         ).exists()
+        
 
         if existe:
             return redirect("index")
@@ -93,13 +113,16 @@ def index(request):
             hora_fim=horario.hora_fim,
         )
 
-        return redirect("pagar_pix", agendamento_id=agendamento.id)
+        agendamento.save()
+
+        return redirect("meus-agendamentos")
 
     context = {
         "quadras": quadras,
     }
 
     return render(request, "index.html", context)
+
 
 @login_required
 def cancelar_agendamento(request, id):
@@ -133,3 +156,35 @@ def horarios_disponiveis(request):
         )
 
     return JsonResponse(lista, safe=False)
+
+
+def verificar_descanso(request):
+
+    data = request.GET.get("data")
+
+    if not data:
+        return JsonResponse({"descanso": False})
+
+    data_obj = date.fromisoformat(data)
+
+    descanso = Descanso.objects.first()
+
+    if not descanso or not descanso.dias_semana:
+        return JsonResponse({"descanso": False})
+
+    mapa = {
+        "mon": "seg",
+        "tue": "ter",
+        "wed": "qua",
+        "thu": "qui",
+        "fri": "sex",
+        "sat": "sab",
+        "sun": "dom",
+    }
+
+    dia_semana = mapa[data_obj.strftime("%a").lower()]
+
+    if dia_semana in descanso.dias_semana:
+        return JsonResponse({"descanso": True})
+
+    return JsonResponse({"descanso": False})
