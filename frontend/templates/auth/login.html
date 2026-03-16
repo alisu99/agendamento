@@ -118,6 +118,23 @@
             }
 
         }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            cursor: pointer;
+            color: #777;
+            font-size: 16px;
+        }
     </style>
 
 </head>
@@ -145,6 +162,14 @@
                     <i class="fa fa-user-circle"></i> Login
                 </div>
 
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger text-center">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
                 <form method="POST">
                     {% csrf_token %}
 
@@ -159,14 +184,18 @@
                         <i class="fa fa-lock"></i> Senha
                     </label>
 
-                    <input type="password" name="password" class="form-control mb-4" placeholder="Digite sua senha"
-                        required autocomplete="off">
+                    <div class="password-box">
+                        <input type="password" name="password" id="password" class="form-control mb-4"
+                            placeholder="Digite sua senha" required autocomplete="off">
+
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <i class="fa fa-eye" id="eyeIcon"></i>
+                        </span>
+                    </div>
 
                     <button type="submit" class="btn btn-login w-100">
-
                         <i class="fa fa-sign-in"></i>
                         Entrar
-
                     </button>
 
                 </form>
@@ -185,6 +214,14 @@
 
                 </div>
 
+                <div class="text-center mt-3">
+
+                    <a href="{% url 'password_reset' %}" class="text-muted" style="font-size:14px;">
+                        Esqueceu sua senha?
+                    </a>
+
+                </div>
+
             </div>
 
         </div>
@@ -192,5 +229,23 @@
     </div>
 
 </body>
+<script>
+    function togglePassword() {
+
+        const password = document.getElementById("password");
+        const icon = document.getElementById("eyeIcon");
+
+        if (password.type === "password") {
+            password.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            password.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+
+    }
+</script>
 
 </html>

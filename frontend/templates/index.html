@@ -39,7 +39,7 @@
             <hr>
             <div>
                 <div style="font-size: medium;">
-                    
+
                     <span id="preview-data"></span>
                 </div>
                 <div style="font-size: medium;">
@@ -61,13 +61,39 @@
         <div class="card" id="step-confirmar">
             <h5>Onde estamos?</h5>
 
-            <span class="mb-2"><i class="fa fa-place"></i> R. Alberto Leal Nunes, 1360 - Lourival Parente, Teresina - PI, 64023-450, Brasil</span>
-            
+            <span class="mb-2">
+                <i class="fa fa-map-marker"></i>
+                R. Alberto Leal Nunes, 1360 - Lourival Parente, Teresina - PI
+            </span>
+
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.804704154731!2d-42.794411025424075!3d-5.135126451944823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x78e37c4f42283d1%3A0x2fd164b77515bfd7!2sArena%20Vila%20Sol!5e0!3m2!1spt-BR!2sbr!4v1773335974731!5m2!1spt-BR!2sbr"
-                style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                style="border:0;width:100%;height:250px;border-radius:10px;" allowfullscreen="" loading="lazy">
+            </iframe>
+
+            <div class="mt-3 text-center">
+                <button type="button" class="btn btn-success" onclick="compartilharLocal()">
+                    <i class="fa fa-share-alt"></i> Compartilhar localização
+                </button>
+            </div>
         </div>
+        <script>
+            function compartilharLocal() {
+
+                const url = "https://maps.google.com/?q=Arena+Vila+Sol+Teresina";
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: "Arena Vila Sol",
+                        text: "Veja a localização da Arena Vila Sol:",
+                        url: url
+                    });
+                } else {
+                    window.open(url, "_blank");
+                }
+
+            }
+        </script>
     </form>
 </div>
 {% endblock %}

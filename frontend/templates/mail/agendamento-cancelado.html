@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body style="margin:0;padding:0;background:#f4f6f9;font-family:Arial,Helvetica,sans-serif;">
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+
+                <table width="600" cellpadding="0" cellspacing="0"
+                    style="background:white;margin-top:30px;border-radius:10px;overflow:hidden;">
+
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center"
+                            style="background:darkorange;padding:30px;color:white;font-size:22px;font-weight:bold;">
+                            Arena Vila Sol
+                        </td>
+                    </tr>
+
+                    <!-- CONTEÚDO -->
+                    <tr>
+                        <td style="padding:30px;color:#333;">
+
+                            <h2 style="margin-top:0;">
+                                Seu gendamento foi cancelado!
+                            </h2>
+
+                            <p>
+                                Olá <strong>{{ nome }}</strong>,
+                            </p>
+
+                            <p>
+                                Seu agendamento foi cancelado. Se não foi você que cancelou, entre em contato o suporte da Arena Vila Sol.
+                            </p>
+
+                            <!-- BOX INFO -->
+                            <table width="100%" cellpadding="10" cellspacing="0"
+                                style="background:#f8f9fa;border-radius:8px;margin-top:20px;">
+
+                                <tr>
+                                    <td>
+                                        <strong>Quadra:</strong> {{ quadra }} - {{numeracao}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <strong>Data:</strong> {{ data }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <strong>Horário:</strong> {{ hora_inicio }} às {{ hora_fim }}
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                            <!-- BOTÃO -->
+                            <div style="text-align:center;margin-top:30px;">
+                                <a href=""
+                                    style="background:#198754;color:white;padding:12px 25px;border-radius:6px;text-decoration:none;font-weight:bold;">
+                                    Ver meus agendamentos
+                                </a>
+                            </div>
+
+                            <p style="margin-top:30px;font-size:14px;color:#777;">
+                                Caso não tenha realizado este agendamento, ignore este email.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center"
+                            style="background:#f1f1f1;padding:15px;font-size:13px;color:#777;">
+                            © {{ ano }} Arena Vila Sol
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

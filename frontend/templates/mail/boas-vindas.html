@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bem-vindo</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f2f4f8;font-family:Arial,Helvetica,sans-serif;">
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+
+                <!-- CONTAINER -->
+                <table width="600" cellpadding="0" cellspacing="0"
+                    style="background:#ffffff;margin-top:40px;border-radius:10px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,0.08);">
+
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="background:darkorange;padding:30px 20px;">
+
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center">
+
+                                        <img src="{% static 'assets/img/logo.png' %}" width="50"
+                                            style="display:block;margin-bottom:10px;" alt="Logo">
+
+                                        <h2 style="color:white;margin:0;font-weight:600;">
+                                            Arena Vila Sol
+                                        </h2>
+
+                                        <p style="color:#ffe6cc;margin-top:6px;font-size:14px;">
+                                            Sistema de Agendamento
+                                        </p>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <!-- BODY -->
+                    <tr>
+                        <td style="padding:40px 35px;color:#444;">
+
+                            <h2 style="margin-top:0;color:#333;font-weight:600;">
+                                Olá {{ nome }} 👋
+                            </h2>
+
+                            <p style="font-size:16px;line-height:1.6;color:#555;">
+                                Sua conta foi criada com sucesso em nosso sistema.
+                            </p>
+
+                            <p style="font-size:16px;line-height:1.6;color:#555;">
+                                Agora você já pode acessar sua conta e realizar seus agendamentos de forma rápida,
+                                prática e segura.
+                            </p>
+
+                            <!-- BOTÃO -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:35px 0;">
+                                <tr>
+                                    <td align="center">
+
+                                        <a href="{{ url_sistema }}" style="background:darkorange;
+color:white;
+padding:14px 32px;
+text-decoration:none;
+font-size:16px;
+border-radius:6px;
+display:inline-block;
+font-weight:600;">
+                                            Acessar minha conta
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="font-size:14px;color:#888;line-height:1.5;">
+                                Caso você não tenha criado esta conta, basta ignorar este email.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- DIVIDER -->
+                    <tr>
+                        <td>
+                            <hr style="border:none;border-top:1px solid #eee;margin:0 30px;">
+                        </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                        <td style="padding:25px;text-align:center;background:#fafafa;">
+
+                            <p style="font-size:13px;color:#888;margin:5px 0;">
+                                © {{ ano }} Arena Vila Sol
+                            </p>
+
+                            <p style="font-size:12px;color:#aaa;margin:5px 0;">
+                                Todos os direitos reservados
+                            </p>
+
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- ESPAÇO FINAL -->
+                <table width="600">
+                    <tr>
+                        <td style="height:40px;"></td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
