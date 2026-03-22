@@ -2,67 +2,199 @@
 
 {% block content %}
 <title>Usuários</title>
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5><i class="fa fa-users"></i> Usuários</h5>
-    <a class="btn btn-success btn-sm" href="{% url 'novo-usuario' %}"><i class="fa fa-plus"></i> Adicionar</a>
+    <div class="page-header">
+        <h5><i class="fa fa-users"></i> Usuários</h5>
+    </div>
+
+    <a class="btn btn-success btn-sm" href="{% url 'novo-usuario' %}">
+        <i class="fa fa-plus"></i> Adicionar
+    </a>
 </div>
-{% for u in usuarios %}
-<div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">Excluir usuário</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+<!-- DESKTOP (TABELA) -->
+<div class="table-container">
 
-            <div class="modal-body">
-                Tem certeza que deseja excluir esse usuário?
-                <br>
-                <small class="text-danger">O usuário será permanentemente excluído do sistema. Essa decisão não poderá
-                    ser revertida.</small>
-                <br><br>
-                <div>
-                    <div><i class="fa fa-user"></i> {{u.get_full_name}}</div>
-                    <div><i class="fa fa-envelope"></i> {{u.email}}</div>
-                    <div><i class="fa fa-phone"></i> {{u.telefone}}</div>
-                    <div><i class="fa fa-lock"></i> Admin: {% if u.is_staff %} Sim{% else %} Não{% endif %}</div>
+    <table class="tabela-agendamentos">
+
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Perfil</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for u in usuarios %}
+
+            <!-- MODAL -->
+            <div class="modal fade" id="modalExcluir{{u.id}}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content modal-profissional">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fa fa-exclamation-triangle text-danger"></i>
+                                Excluir usuário
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <p class="text-center mb-2">
+                                Tem certeza que deseja excluir este usuário?
+                            </p>
+
+                            <small class="text-danger d-block text-center mb-3">
+                                Essa ação não poderá ser desfeita.
+                            </small>
+
+                            <div class="info-modal">
+                                <p><i class="fa fa-user"></i> {{u.get_full_name}}</p>
+                                <p><i class="fa fa-envelope"></i> {{u.email}}</p>
+                                <p><i class="fa fa-phone"></i> {{u.telefone}}</p>
+                                <p>
+                                    <i class="fa fa-lock"></i>
+                                    Admin: {% if u.is_staff %}Sim{% else %}Não{% endif %}
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-light" data-bs-dismiss="modal">
+                                Voltar
+                            </button>
+
+                            <a href="{% url 'excluir-usuario' u.id %}" class="btn btn-danger">
+                                Excluir
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-footer">
+            <!-- LINHA -->
+            <tr>
 
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Voltar
-                </button>
+                <td>{{u.get_full_name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.telefone}}</td>
 
-                <a href="{% url 'excluir-usuario' u.id %}" class="btn btn-danger">
-                    Sim, quero excluir
-                </a>
+                <td>
+                    {% if u.is_staff %}
+                    <span class="badge-admin">Admin</span>
+                    {% else %}
+                    <span class="badge-user">Usuário</span>
+                    {% endif %}
+                </td>
 
-            </div>
+                <td class="text-end">
 
-        </div>
-    </div>
+                    <a href="{% url 'editar-usuario' u.id %}" class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <button class="btn btn-cancelar btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#modalExcluir{{u.id}}">
+                        Excluir
+                    </button>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">
+                    Nenhum usuário cadastrado.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
 </div>
 
-<div class="card card-usuario">
-    <div class="agendamento-info">
-        <div>
-            <div><i class="fa fa-user"></i> {{u.get_full_name}}</div>
-            <div><i class="fa fa-envelope"></i> {{u.email}}</div>
-            <div><i class="fa fa-phone"></i> {{u.telefone}}</div>
-            <div><i class="fa fa-lock"></i> Admin: {% if u.is_staff %} Sim{% else %} Não{% endif %}</div>
-        </div>
-    </div>
-    <div class="card-utils">
-        <a href="{% url 'editar-usuario' u.id %}" class="btn btn-warning btn-sm">
-            <i class="fa fa-edit"></i> Editar
-        </a>
+<!-- MOBILE -->
+<div class="mobile-agendamentos">
 
-        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}"><i
-                class="fa fa-trash"></i> Excluir</button>
+    {% for u in usuarios %}
+
+    <div class="mobile-card">
+
+        <div class="mobile-top">
+            <span class="mobile-data">
+                <i class="fa fa-user"></i> {{u.get_full_name}}
+            </span>
+
+            {% if u.is_staff %}
+            <span class="badge-admin">Admin</span>
+            {% else %}
+            <span class="badge-user">Usuário</span>
+            {% endif %}
+        </div>
+
+        <div class="mobile-info">
+            <p><i class="fa fa-envelope"></i> {{u.email}}</p>
+            <p><i class="fa fa-phone"></i> {{u.telefone}}</p>
+        </div>
+
+        <div class="d-flex gap-2 mt-2">
+
+            <a href="{% url 'editar-usuario' u.id %}" class="btn btn-warning w-100">
+                Editar
+            </a>
+
+            <button class="btn btn-cancelar w-100" data-bs-toggle="modal" data-bs-target="#modalExcluir{{u.id}}">
+                Excluir
+            </button>
+
+        </div>
+
     </div>
+
+    {% empty %}
+
+    <p class="text-center text-muted mt-3">
+        Nenhum usuário cadastrado.
+    </p>
+
+    {% endfor %}
+
 </div>
-{% endfor %}
+<style>
+    /* ========================= */
+    /* 👤 BADGES USUÁRIO */
+    /* ========================= */
+
+    .badge-admin {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .badge-user {
+        background: #e0f2fe;
+        color: #075985;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+</style>
 {% endblock %}

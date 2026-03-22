@@ -3,107 +3,201 @@
 {% block content %}
 <title>Histórico</title>
 
-<h5 class="mb-3"><i class="fa fa-calendar"></i> Meus Agendamentos</h5>
 
-{% for h in historico %}
+<div class="historico-container">
+    <div class="page-header">
+        <h5>
+            <i class="fa fa-calendar"></i> Meus Agendamentos
+        </h5>
+    </div>
 
-<div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    {% for h in historico %}
 
-            <div class="modal-header">
-                <h5 class="modal-title">Cancelar agendamento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+    <!-- MODAL -->
+    <div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-profissional">
 
-            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-exclamation-triangle text-danger"></i>
+                        Cancelar agendamento
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-                Tem certeza que deseja cancelar este agendamento?
-                <br><br>
+                <div class="modal-body">
 
-                <div>
+                    <p class="mb-3">
+                        Deseja realmente cancelar este agendamento?
+                    </p>
 
-                    <div style="font-size: larger;">
-                        <i class="fa fa-calendar"></i> {{h.data}}
-                    </div>
+                    <div class="info-modal">
 
-                    <div style="font-size: larger;">
-                        <i class="fa fa-clock-o"></i>
-                        {{h.hora_inicio}} às {{h.hora_fim}}
-                    </div>
+                        <p><i class="fa fa-calendar"></i> {{h.data}}</p>
+                        <p><i class="fa fa-clock-o"></i> {{h.hora_inicio}} às {{h.hora_fim}}</p>
+                        <p><i class="fa fa-circle"></i> {{h.quadra_nome}} - Q{{h.quadra_numero}}</p>
 
-                    <div style="font-size: larger;">
-                        <i class="fa fa-circle"></i>
-                        {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
                     </div>
 
                 </div>
 
-            </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light w-100" data-bs-dismiss="modal">
+                        Voltar
+                    </button>
 
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Voltar
-                </button>
-
-                <a href="{% url 'cancelar' h.id %}" class="btn btn-danger">
-                    Confirmar cancelamento
-                </a>
+                    <a href="{% url 'cancelar' h.id %}" class="btn btn-danger w-100">
+                        Confirmar cancelamento
+                    </a>
+                </div>
 
             </div>
-
         </div>
     </div>
-</div>
 
+    <!-- CARD MOBILE -->
+    <div class="historico-card">
 
-<div class="card d-flex flex-row justify-content-between align-items-center mb-2 p-3">
+        <div class="historico-top">
 
-    <div class="agendamento-info">
-
-        <div>
-
-            <div style="font-size: larger;">
+            <span class="historico-data">
                 <i class="fa fa-calendar"></i> {{h.data}}
-            </div>
+            </span>
 
-            <div style="font-size: larger;">
+            {% if h.data < hoje %} <span class="badge-concluido">
+                <i class="fa fa-check-circle"></i> Concluído
+                </span>
+                {% endif %}
+
+        </div>
+
+        <div class="historico-body">
+
+            <p>
                 <i class="fa fa-clock-o"></i>
                 {{h.hora_inicio}} às {{h.hora_fim}}
-            </div>
+            </p>
 
-            <div style="font-size: larger;">
+            <p>
                 <i class="fa fa-circle"></i>
                 {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
-            </div>
+            </p>
 
         </div>
 
-    </div>
-
-    <div>
-
         {% if h.data >= hoje %}
-
-        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
-            Cancelar
-        </button>   
-
-        {% else %}
-
-        <span class="text-muted">Concluído</span>
-
+        <button class="btn btn-cancelar w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
+            Cancelar agendamento
+        </button>
         {% endif %}
 
     </div>
 
+    {% empty %}
+
+    <div class="empty-state">
+        <i class="fa fa-calendar-times"></i>
+        <p>Você não possui agendamentos.</p>
+    </div>
+
+    {% endfor %}
+
 </div>
+<style>
+    /* ========================= */
+    /* 📱 HISTÓRICO MOBILE FIRST */
+    /* ========================= */
 
-{% empty %}
+    .historico-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 
-<p>Você não possui agendamentos.</p>
+    /* CARD */
 
-{% endfor %}
+    .historico-card {
+        background: white;
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #f1f5f9;
+    }
 
+    /* TOPO */
+
+    .historico-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .historico-data {
+        font-weight: 600;
+        font-size: 14px;
+        color: #111827;
+    }
+
+    /* CORPO */
+
+    .historico-body p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #374151;
+    }
+
+    /* BOTÃO */
+
+    .btn-cancelar {
+        background: #ef4444;
+        border: none;
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .btn-cancelar:hover {
+        background: #dc2626;
+    }
+
+    /* STATUS */
+
+    .badge-concluido {
+        background: #dcfce7;
+        color: #166534;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+    }
+
+    /* EMPTY STATE */
+
+    .empty-state {
+        text-align: center;
+        color: #6b7280;
+        margin-top: 40px;
+    }
+
+    .empty-state i {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    /* ========================= */
+    /* 💻 DESKTOP AJUSTE */
+    /* ========================= */
+
+    @media (min-width:768px) {
+
+        .historico-container {
+            max-width: 400px;
+            margin: auto;
+        }
+
+    }
+</style>
 {% endblock %}

@@ -123,39 +123,39 @@ def index(request):
 
         agendamento.save()
 
-        html_content = render_to_string(
-            "mail/agendamento-confirmado.html",
-            {
-                "nome": agendamento.usuario.first_name,
-                "quadra": agendamento.quadra_nome,
-                "numeracao": agendamento.quadra.numeracao,
-                "data": agendamento.data,
-                "hora_inicio": agendamento.hora_inicio,
-                "hora_fim": agendamento.hora_fim,
-                "url_sistema": request.build_absolute_uri("/"),
-                "ano": datetime.now().year
-            }
-        )
+        # html_content = render_to_string(
+        #     "mail/agendamento-confirmado.html",
+        #     {
+        #         "nome": agendamento.usuario.first_name,
+        #         "quadra": agendamento.quadra_nome,
+        #         "numeracao": agendamento.quadra.numeracao,
+        #         "data": agendamento.data,
+        #         "hora_inicio": agendamento.hora_inicio,
+        #         "hora_fim": agendamento.hora_fim,
+        #         "url_sistema": request.build_absolute_uri("/"),
+        #         "ano": datetime.now().year
+        #     }
+        # )
 
-        email = EmailMultiAlternatives(
-            subject="Agendamento confirmado - Arena Vila Sol",
-            body=f"""
-        Olá {agendamento.usuario.first_name},
+        # email = EmailMultiAlternatives(
+        #     subject="Agendamento confirmado - Arena Vila Sol",
+        #     body=f"""
+        # Olá {agendamento.usuario.first_name},
 
-        Seu agendamento foi confirmado!
+        # Seu agendamento foi confirmado!
 
-        Quadra: {agendamento.quadra_nome} - {agendamento.quadra.numeracao}
-        Data: {agendamento.data}
-        Horário: {agendamento.hora_inicio} às {agendamento.hora_fim}
+        # Quadra: {agendamento.quadra_nome} - {agendamento.quadra.numeracao}
+        # Data: {agendamento.data}
+        # Horário: {agendamento.hora_inicio} às {agendamento.hora_fim}
 
-        Acesse o sistema para ver seus agendamentos.
-        """,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[agendamento.usuario.email]
-        )
+        # Acesse o sistema para ver seus agendamentos.
+        # """,
+        #     from_email=settings.DEFAULT_FROM_EMAIL,
+        #     to=[agendamento.usuario.email]
+        # )
 
-        email.attach_alternative(html_content, "text/html")
-        email.send()
+        # email.attach_alternative(html_content, "text/html")
+        # email.send()
 
         return redirect("meus-agendamentos")
 
@@ -177,41 +177,41 @@ def cancelar_agendamento(request, id):
 
     agendamento.delete()
 
-    html_content = render_to_string(
-        "mail/agendamento-cancelado.html",
-        {
-            "nome": agendamento.usuario.first_name,
-            "quadra": agendamento.quadra_nome,
-            "numeracao": agendamento.quadra.numeracao,
-            "data": agendamento.data,
-            "hora_inicio": agendamento.hora_inicio,
-            "hora_fim": agendamento.hora_fim,
-            "url_sistema": request.build_absolute_uri("/"),
-            "ano": datetime.now().year
-        }
-    )
+#     html_content = render_to_string(
+#         "mail/agendamento-cancelado.html",
+#         {
+#             "nome": agendamento.usuario.first_name,
+#             "quadra": agendamento.quadra_nome,
+#             "numeracao": agendamento.quadra.numeracao,
+#             "data": agendamento.data,
+#             "hora_inicio": agendamento.hora_inicio,
+#             "hora_fim": agendamento.hora_fim,
+#             "url_sistema": request.build_absolute_uri("/"),
+#             "ano": datetime.now().year
+#         }
+#     )
 
-    email = EmailMultiAlternatives(
-        subject="Agendamento Cancelado",
-        body=f"""
-Olá {agendamento.usuario.first_name},
+#     email = EmailMultiAlternatives(
+#         subject="Agendamento Cancelado",
+#         body=f"""
+# Olá {agendamento.usuario.first_name},
 
-Seu agendamento foi cancelado.
+# Seu agendamento foi cancelado.
 
-Quadra: {agendamento.quadra_nome}
-Data: {agendamento.data}
-Horário: {agendamento.hora_inicio} às {agendamento.hora_fim}
-""",
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[agendamento.usuario.email]
-    )
+# Quadra: {agendamento.quadra_nome}
+# Data: {agendamento.data}
+# Horário: {agendamento.hora_inicio} às {agendamento.hora_fim}
+# """,
+#         from_email=settings.DEFAULT_FROM_EMAIL,
+#         to=[agendamento.usuario.email]
+#     )
 
-    email.attach_alternative(html_content, "text/html")
+#     email.attach_alternative(html_content, "text/html")
 
-    try:
-        email.send()
-    except:
-        pass
+#     try:
+#         email.send()
+#     except:
+#         pass
 
     return redirect("meus-agendamentos")
 

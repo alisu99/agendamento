@@ -1,0 +1,193 @@
+ /* ========================= */
+ /* 📄 HEADER */
+ /* ========================= */
+
+ .page-header h5 {
+     display: flex;
+     opacity: 0.9;
+     align-items: center;
+     gap: 8px;
+     justify-content: center;
+     background: #ffffffba;
+     padding: 6px;
+     border-radius: 10px;
+ }
+
+ /* ========================= */
+ /* 📊 TABELA */
+ /* ========================= */
+
+ .table-container {
+     background: #ffffff;
+     border-radius: 12px;
+     padding: 10px;
+     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+ }
+
+ .tabela-agendamentos {
+     width: 100%;
+     border-collapse: collapse;
+     font-size: 14px;
+ }
+
+ .tabela-agendamentos thead {
+     background: #f9fafb;
+ }
+
+ .tabela-agendamentos th {
+     text-align: left;
+     padding: 12px 14px;
+     font-weight: 600;
+     color: #374151;
+     font-size: 13px;
+     border-bottom: 1px solid #e5e7eb;
+ }
+
+ .tabela-agendamentos td {
+     padding: 12px 14px;
+     border-bottom: 1px solid #f1f5f9;
+     color: #111827;
+ }
+
+ .tabela-agendamentos tbody tr:hover {
+     background: #f9fafb;
+ }
+
+ .tabela-agendamentos tbody tr:last-child td {
+     border-bottom: none;
+ }
+
+ /* ========================= */
+ /* 🎯 BOTÃO */
+ /* ========================= */
+
+ .btn-cancelar {
+     background: #ef4444;
+     border: none;
+     color: white;
+     padding: 6px 12px;
+     border-radius: 6px;
+     font-size: 13px;
+     transition: 0.2s;
+ }
+
+ .btn-cancelar:hover {
+     background: #dc2626;
+ }
+
+ /* ========================= */
+ /* ✅ STATUS */
+ /* ========================= */
+
+ .badge-concluido {
+     background: #dcfce7;
+     color: #166534;
+     padding: 5px 10px;
+     border-radius: 999px;
+     font-size: 12px;
+     font-weight: 500;
+ }
+
+ /* ========================= */
+ /* 🎬 MODAL */
+ /* ========================= */
+
+ .modal-profissional {
+     border-radius: 12px;
+     border: none;
+     padding: 10px;
+ }
+
+ .modal-header {
+     border-bottom: none;
+ }
+
+ .modal-footer {
+     border-top: none;
+ }
+
+ .modal-body {
+     font-size: 14px;
+     color: #374151;
+ }
+
+ .info-modal {
+     background: #f9fafb;
+     padding: 12px;
+     border-radius: 8px;
+ }
+
+ .info-modal p {
+     margin: 6px 0;
+     font-size: 14px;
+ }
+
+ /* ========================= */
+ /* 📱 RESPONSIVO */
+ /* ========================= */
+
+ @media (max-width:768px) {
+
+     .tabela-agendamentos th,
+     .tabela-agendamentos td {
+         padding: 10px;
+         font-size: 12px;
+     }
+
+ }
+
+ /* ========================= */
+ /* 📱 MOBILE VIEW */
+ /* ========================= */
+
+ .mobile-agendamentos {
+     display: none;
+ }
+
+ /* CARD MOBILE */
+
+ .mobile-card {
+     background: white;
+     border-radius: 12px;
+     padding: 14px;
+     margin-bottom: 12px;
+     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+     border: 1px solid #f1f5f9;
+ }
+
+ .mobile-top {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 10px;
+ }
+
+ .mobile-data {
+     font-weight: 600;
+     color: #111827;
+     font-size: 14px;
+ }
+
+ .mobile-info p {
+     margin: 4px 0;
+     font-size: 13px;
+     color: #374151;
+ }
+
+ /* ========================= */
+ /* 🔄 RESPONSIVIDADE */
+ /* ========================= */
+
+ @media (max-width:768px) {
+
+     /* esconder tabela */
+     .table-container {
+         display: none;
+     }
+
+     /* mostrar mobile */
+     .mobile-agendamentos {
+         display: block;
+     }
+
+ }

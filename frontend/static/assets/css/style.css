@@ -23,11 +23,11 @@ body {
 }
 
 /* NAVBAR */
-
 .navbar-custom {
-    background: darkorange;
+    background: linear-gradient(90deg, #ea580c, #f97316);
     color: white;
-    padding: 18px 40px;
+    padding: 14px 30px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
 
 .container-navbar {
@@ -36,12 +36,6 @@ body {
     align-items: center;
 }
 
-.logo {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-weight: 600;
-}
 
 .logo img {
     max-width: 45px;
@@ -84,27 +78,37 @@ body {
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-size: 15px;
-    /* text-shadow: 0px 0px 3px #00000099; */
+    font-size: 14px;
+    opacity: 0.9;
+    transition: 0.2s;
 }
 
 .nav-links a:hover {
-    opacity: 0.8;
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.nav-links a.active {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    position: relative;
 }
 
 /* BOTÃO SAIR */
 
 .btn-logout {
-    background: #ef4444;
+    background: rgba(255, 255, 255, 0.15);
     border: none;
-    padding: 6px 14px;
+    padding: 6px 10px;
+    border-radius: 8px;
     color: white;
-    border-radius: 6px;
-    cursor: pointer;
+    transition: 0.2s;
 }
 
 .btn-logout:hover {
-    background: #dc2626;
+    background: rgba(255, 255, 255, 0.25);
 }
 
 /* CONTAINER */
@@ -112,7 +116,7 @@ body {
 .container-main {
     padding: 40px;
     max-width: 1000px;
-    margin: auto;
+    margin: 0 auto;
 }
 
 /* CARDS */
@@ -167,9 +171,20 @@ body {
     pointer-events: none;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
 @media (min-width:769px) {
     form {
         width: 400px;
+    }
+
+    .page-header {
+        display: none;
     }
 
     /* login */
@@ -182,6 +197,12 @@ body {
     .mobile-menu {
         display: none;
     }
+
+    .logo {
+
+        font-size: 16px;
+    }
+
 }
 
 .mobile-user {
@@ -314,13 +335,13 @@ body {
         gap: 10px;
     }
 
-    .container-main {
-        padding: 20px;
-    }
-
     .card {
         padding: 15px;
         width: 100%;
+    }
+
+    .container-main {
+        padding: 10px;
     }
 
     /* AGENDAMENTO EM COLUNA */
@@ -343,6 +364,8 @@ body {
 
 }
 
+
+
 /* ========================= */
 /* 📱 MOBILE PEQUENO */
 /* ========================= */
@@ -357,12 +380,76 @@ body {
         font-size: 14px;
     }
 
-    .container-main {
-        padding: 15px;
-    }
-
     .card {
         border-radius: 8px;
     }
 
+}
+
+
+@media (max-width:768px) {
+    .navbar-custom {
+        padding: 12px 20px;
+    }
+
+}
+
+.mobile-menu a.active-mobile {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding-left: 10px;
+}
+
+.badge-admin {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+}
+
+.mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    padding: 12px 0;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.container-main {
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+.mobile-menu {
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+    border: 2px solid #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: grey;
 }

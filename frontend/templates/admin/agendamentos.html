@@ -3,120 +3,167 @@
 {% block content %}
 <title>Agendamentos</title>
 
-<h5 class="mb-3"><i class="fa fa-calendar"></i> Agenda</h5>
-
-{% for h in agendamentos %}
-
-<div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Cancelar agendamento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-
-                Tem certeza que deseja cancelar este agendamento?
-
-                <br><br>
-
-                <div>
-
-                    <div style="font-size: larger;">
-                        <i class="fa fa-calendar"></i> {{h.data}}
-                    </div>
-
-                    <div style="font-size: larger;">
-                        <i class="fa fa-clock-o"></i>
-                        {{h.hora_inicio}} às {{h.hora_fim}}
-                    </div>
-
-                    <div style="font-size: larger;">
-                        <i class="fa fa-circle"></i>
-                        {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
-                    </div>
-
-                    <div style="font-size: larger;">
-                        <i class="fa fa-user"></i>
-                        {{h.usuario.get_full_name}} | {{h.usuario.telefone|default_if_none:''}}
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Voltar
-                </button>
-
-                <a href="{% url 'cancelar' h.id %}" class="btn btn-danger">
-                    Confirmar cancelamento
-                </a>
-
-            </div>
-
-        </div>
-    </div>
+<div class="page-header">
+    <h5>
+        <i class="fa fa-calendar"></i> Agendamentos
+    </h5>
 </div>
 
+<div class="table-container">
 
-<div class="card card-usuario mb-2 p-3">
+    <table class="tabela-agendamentos">
 
-    <div class="agendamento-info">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Quadra</th>
+                <th>Cliente</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
 
-        <div>
+        <tbody>
 
-            <div style="font-size: larger;">
+            {% for h in agendamentos %}
+
+            <!-- MODAL -->
+            <div class="modal fade" id="modalCancelar{{h.id}}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content modal-profissional">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fa fa-exclamation-triangle text-danger"></i>
+                                Cancelar agendamento
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <p class="text-center mb-3">
+                                Tem certeza que deseja cancelar este agendamento?
+                            </p>
+
+                            <div class="info-modal">
+
+                                <p><i class="fa fa-calendar"></i> {{h.data}}</p>
+                                <p><i class="fa fa-clock-o"></i> {{h.hora_inicio}} às {{h.hora_fim}}</p>
+                                <p><i class="fa fa-circle"></i> {{h.quadra_nome}} - Quadra {{h.quadra_numero}}</p>
+                                <p><i class="fa fa-user"></i> {{h.usuario.get_full_name}}</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                Voltar
+                            </button>
+
+                            <a href="{% url 'cancelar' h.id %}" class="btn btn-danger">
+                                Confirmar cancelamento
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- LINHA -->
+            <tr>
+
+                <td>{{h.data}}</td>
+
+                <td>
+                    {{h.hora_inicio}} às {{h.hora_fim}}
+                </td>
+
+                <td>
+                    {{h.quadra_nome}} - Q{{h.quadra_numero}}
+                </td>
+
+                <td>
+                    {{h.usuario.get_full_name}}
+                </td>
+
+                <td class="text-end">
+
+                    {% if h.data >= hoje %}
+
+                    <button class="btn btn-cancelar btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#modalCancelar{{h.id}}">
+                        Cancelar
+                    </button>
+
+                    {% else %}
+
+                    <span class="badge-concluido">
+                        <i class="fa fa-check-circle"></i> Concluído
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">
+                    Não existem agendamentos.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- MOBILE VIEW -->
+<div class="mobile-agendamentos">
+
+    {% for h in agendamentos %}
+
+    <div class="mobile-card">
+
+        <div class="mobile-top">
+            <span class="mobile-data">
                 <i class="fa fa-calendar"></i> {{h.data}}
-            </div>
+            </span>
 
-            <div style="font-size: larger;">
-                <i class="fa fa-clock-o"></i>
-                {{h.hora_inicio}} às {{h.hora_fim}}
-            </div>
-
-            <div style="font-size: larger;">
-                <i class="fa fa-circle"></i>
-                {{h.quadra_nome}} - Quadra {{h.quadra_numero}}
-            </div>
-
-            <div style="font-size: larger;">
-                <i class="fa fa-user"></i>
-                {{h.usuario.get_full_name}} | {{h.usuario.telefone|default_if_none:''}}
-            </div>
-
+            {% if h.data < hoje %} <span class="badge-concluido">
+                Concluído
+                </span>
+                {% endif %}
         </div>
 
-    </div>
-
-    <div class="card-utils">
+        <div class="mobile-info">
+            <p><i class="fa fa-clock-o"></i> {{h.hora_inicio}} às {{h.hora_fim}}</p>
+            <p><i class="fa fa-circle"></i> {{h.quadra_nome}} - Q{{h.quadra_numero}}</p>
+            <p><i class="fa fa-user"></i> {{h.usuario.get_full_name}}</p>
+        </div>
 
         {% if h.data >= hoje %}
-
-        <button class="btn btn-danger btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#modalCancelar{{h.id}}">
-            Cancelar
+        <button class="btn btn-cancelar w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
+            Cancelar agendamento
         </button>
-
-        {% else %}
-
-        <span class="text-muted">Concluído</span>
-
         {% endif %}
 
     </div>
 
+    {% empty %}
+
+    <p class="text-center text-muted mt-3">
+        Não existem agendamentos.
+    </p>
+
+    {% endfor %}
+
 </div>
-
-{% empty %}
-
-<p>Não existem agendamentos.</p>
-
-{% endfor %}
-
 {% endblock %}

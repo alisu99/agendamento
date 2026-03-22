@@ -4,7 +4,9 @@
 <title>{{request.user.get_full_name}}</title>
 <div class="d-flex flex-column align-items-center">
     <form method="POST">
-        <h5 class="mb-3"><i class="fa fa-user"></i> Meu perfil</h5>
+        <div class="page-header">
+            <h5 class="mb-3"><i class="fa fa-user"></i> Meu perfil</h5>
+        </div>
         {% csrf_token %}
 
         <div class="card">
