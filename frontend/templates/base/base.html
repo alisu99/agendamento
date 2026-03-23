@@ -12,8 +12,122 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="shortcut icon" href="{% static 'assets/img/logo.png' %}" type="image/x-icon">
+
+    <style>
+        /* ===== NAVBAR ===== */
+        .navbar-custom {
+            background: linear-gradient(90deg, #ea580c, #f97316);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 220px;
+            height: calc(100vh - 70px);
+            background: linear-gradient(180deg, #ea580c, #f97316);
+            padding: 15px 10px;
+            transition: 0.3s;
+            z-index: 999;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: white;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar a.active {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* COLAPSADA */
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar.collapsed span {
+            display: none;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        /* BOTÃO */
+        .toggle-sidebar {
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* ===== LAYOUT ===== */
+        .layout {
+            display: flex;
+        }
+
+        .content {
+            margin-top: 70px;
+            margin-left: 220px;
+            padding: 30px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .sidebar.collapsed~.content {
+            margin-left: 70px;
+        }
+
+        /* MOBILE */
+        @media(max-width:768px) {
+
+            .sidebar.collapsed~.content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .toggle-sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -22,46 +136,20 @@
     <nav class="navbar-custom">
         <div class="container-navbar">
 
-            <div class="logo">
-                <img src="{% static 'assets/img/logo.png' %}" alt="Arena Vila Sol">
-                <span>Arena Vila Sol</span>
+            <div style="display:flex; align-items:center;">
+                <div class="toggle-sidebar" onclick="toggleSidebar()">
+                    <i class="fa fa-bars"></i>
+                </div>
+
+                <div class="logo">
+                    <img src="{% static 'assets/img/logo.png' %}" style="max-width:40px;">
+                    <span style="margin-left:10px;">Arena Vila Sol</span>
+                </div>
             </div>
 
-            <!-- DESKTOP -->
             <div class="nav-links desktop-menu">
-
-                <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
-                    <i class="fa fa-home"></i> Início
-                </a>
-
-                <a href="{% url 'meus-agendamentos' %}"
-                    class="{% if request.resolver_match.url_name == 'meus-agendamentos' %}active{% endif %}">
-                    <i class="fa fa-calendar"></i> Histórico
-                </a>
-
-                {% if request.user.is_staff %}
-                <a href="{% url 'agendamentos' %}"
-                    class="{% if request.resolver_match.url_name == 'agendamentos' %}active{% endif %}">
-                    <i class="fa fa-calendar"></i> Agendamentos
-                </a>
-                {% endif %}
-
-                {% if request.user.is_staff %}
-                <a href="{% url 'ajustes' %}"
-                    class="{% if request.resolver_match.url_name == 'ajustes' %}active{% endif %}">
-                    <i class="fa fa-cog"></i> Ajustes
-                </a>
-                {% endif %}
-
-                {% if request.user.is_staff %}
-                <a href="{% url 'usuarios' %}"
-                    class="{% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}">
-                    <i class="fa fa-users"></i> Usuários
-                </a>
-                {% endif %}
-
                 <a href="{% url 'meu-perfil' %}"
-                    class="user-link {% if request.resolver_match.url_name == 'meu-perfil' %}active{% endif %}">
+                    class="{% if request.resolver_match.url_name == 'meu-perfil' %}active{% endif %}">
                     <i class="fa fa-user"></i>
                     {{request.user.get_full_name}}
                 </a>
@@ -72,10 +160,8 @@
                         <i class="fa fa-sign-out"></i>
                     </button>
                 </form>
-
             </div>
 
-            <!-- MOBILE BUTTON -->
             <div class="mobile-user" onclick="abrirMenu()">
                 <i class="fa fa-bars"></i>
             </div>
@@ -83,9 +169,10 @@
         </div>
     </nav>
 
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobileMenu">
 
+
+    <!-- MOBILE MENU (mantido) -->
+    <div class="mobile-menu" id="mobileMenu">
         <div class="menu-header">
             <strong>{{request.user.get_full_name}}</strong>
             {% if request.user.is_staff %}
@@ -93,54 +180,70 @@
             {% endif %}
         </div>
 
-        <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active-mobile{% endif %}">
-            <i class="fa fa-home"></i> Início
-        </a>
-
-        <a href="{% url 'meus-agendamentos' %}"
-            class="{% if request.resolver_match.url_name == 'meus-agendamentos' %}active-mobile{% endif %}">
-            <i class="fa fa-calendar"></i> Histórico
-        </a>
+        <a href="{% url 'index' %}">Início</a>
+        <a href="{% url 'meus-agendamentos' %}">Histórico</a>
 
         {% if request.user.is_staff %}
-        <a href="{% url 'agendamentos' %}"
-            class="{% if request.resolver_match.url_name == 'agendamentos' %}active-mobile{% endif %}">
-            <i class="fa fa-calendar"></i> Agendamentos
-        </a>
-
-        <a href="{% url 'ajustes' %}"
-            class="{% if request.resolver_match.url_name == 'ajustes' %}active-mobile{% endif %}">
-            <i class="fa fa-cog"></i> Ajustes
-        </a>
-
-        <a href="{% url 'usuarios' %}"
-            class="{% if request.resolver_match.url_name == 'usuarios' %}active-mobile{% endif %}">
-            <i class="fa fa-users"></i> Usuários
-        </a>
+        <a href="{% url 'agendamentos' %}">Agendamentos</a>
+        <a href="{% url 'ajustes' %}">Ajustes</a>
+        <a href="{% url 'usuarios' %}">Usuários</a>
         {% endif %}
 
-        <a href="{% url 'meu-perfil' %}"
-            class="{% if request.resolver_match.url_name == 'meu-perfil' %}active-mobile{% endif %}">
-            <i class="fa fa-user"></i> Meu perfil
-        </a>
+        <a href="{% url 'meu-perfil' %}">Meu perfil</a>
 
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button class="logout-mobile">
-                <i class="fa fa-sign-out"></i> Sair
-            </button>
+            <button class="logout-mobile">Sair</button>
         </form>
-
     </div>
 
-    <div class="menu-overlay" id="overlay" onclick="fecharMenu()"></div>
+    <div class="layout">
 
-    <!-- CONTEÚDO -->
-    <div class="container-main">
-        {% block content %}
-        {% endblock %}
+        <aside class="sidebar" id="sidebar">
+
+            <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                <i class="fa fa-home"></i>
+                <span>Início</span>
+            </a>
+
+            <a href="{% url 'meus-agendamentos' %}"
+                class="{% if request.resolver_match.url_name == 'meus-agendamentos' %}active{% endif %}">
+                <i class="fa fa-clock-o"></i>
+                <span>Histórico</span>
+            </a>
+
+            {% if request.user.is_staff %}
+            <a href="{% url 'agendamentos' %}"
+                class="{% if request.resolver_match.url_name == 'agendamentos' %}active{% endif %}">
+                <i class="fa fa-calendar"></i>
+                <span>Agendamentos</span>
+            </a>
+
+            <a href="{% url 'ajustes' %}"
+                class="{% if request.resolver_match.url_name == 'ajustes' %}active{% endif %}">
+                <i class="fa fa-cog"></i>
+                <span>Ajustes</span>
+            </a>
+
+            <a href="{% url 'usuarios' %}"
+                class="{% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}">
+                <i class="fa fa-users"></i>
+                <span>Usuários</span>
+            </a>
+
+            <a href="">
+                <i class="fa fa-credit-card"></i>
+                <span>Faturas</span>
+            </a>
+            {% endif %}
+        </aside>
+
+        <div class="content" id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
     </div>
-
     <!-- SCRIPTS -->
     <script>
         function abrirMenu() {
@@ -152,10 +255,12 @@
             document.getElementById("mobileMenu").classList.remove("open")
             document.getElementById("overlay").classList.remove("show")
         }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed")
+        }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 
 </html>
