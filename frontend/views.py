@@ -47,7 +47,7 @@ def historico(request):
         Agendamento.objects
         .filter(usuario=usuario)
         .select_related("quadra", "horario")
-        .order_by("-id")
+        .order_by("-data", "-hora_inicio")
     )
 
     hoje = timezone.now().date()

@@ -65,10 +65,7 @@
                 <i class="fa fa-calendar"></i> {{h.data}}
             </span>
 
-            {% if h.data < hoje %} <span class="badge-concluido">
-                <i class="fa fa-check-circle"></i> Concluído
-                </span>
-                {% endif %}
+
 
         </div>
 
@@ -90,6 +87,12 @@
         <button class="btn btn-cancelar w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
             Cancelar agendamento
         </button>
+        {% endif %}
+
+        {% if h.data < hoje %} 
+        <span class="badge-concluido">
+            <i class="fa fa-check-circle"></i> Concluído
+        </span>
         {% endif %}
 
     </div>
@@ -193,9 +196,17 @@
 
     @media (min-width:768px) {
 
+        .historico-card {
+            max-width: 300px;
+            width: 100%;
+        }
+
         .historico-container {
-            max-width: 400px;
+            max-width: 1000px;
             margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
         }
 
     }
