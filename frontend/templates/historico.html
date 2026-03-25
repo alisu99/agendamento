@@ -47,17 +47,17 @@
                         Voltar
                     </button>
 
-                    <a href="{% url 'cancelar' h.id %}" class="btn btn-danger w-100">
+                    <button class="btn btn-danger w-100 btn-confirmar-cancelamento" data-id="{{h.id}}"
+                        data-bs-dismiss="modal">
                         Confirmar cancelamento
-                    </a>
+                    </button>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- CARD MOBILE -->
-    <div class="historico-card">
+    <div class="historico-card" id="card-{{h.id}}">
 
         <div class="historico-top">
 
@@ -84,16 +84,16 @@
         </div>
 
         {% if h.data >= hoje %}
-        <button class="btn btn-cancelar w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalCancelar{{h.id}}">
+        <button class="btn btn-cancelar" id="btn-cancelar-{{h.id}}" data-bs-toggle="modal"
+            data-bs-target="#modalCancelar{{h.id}}">
             Cancelar agendamento
         </button>
         {% endif %}
 
-        {% if h.data < hoje %} 
-        <span class="badge-concluido">
+        {% if h.data < hoje %} <span class="badge-concluido">
             <i class="fa fa-check-circle"></i> Concluído
-        </span>
-        {% endif %}
+            </span>
+            {% endif %}
 
     </div>
 
@@ -107,108 +107,36 @@
     {% endfor %}
 
 </div>
-<style>
-    /* ========================= */
-    /* 📱 HISTÓRICO MOBILE FIRST */
-    /* ========================= */
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-confirmar-cancelamento').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const card = document.getElementById('card-' + id);
+                const btnCancelar = document.getElementById('btn-cancelar-' + id);
 
-    .historico-container {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    /* CARD */
-
-    .historico-card {
-        background: white;
-        border-radius: 14px;
-        padding: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-        border: 1px solid #f1f5f9;
-    }
-
-    /* TOPO */
-
-    .historico-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .historico-data {
-        font-weight: 600;
-        font-size: 14px;
-        color: #111827;
-    }
-
-    /* CORPO */
-
-    .historico-body p {
-        margin: 5px 0;
-        font-size: 14px;
-        color: #374151;
-    }
-
-    /* BOTÃO */
-
-    .btn-cancelar {
-        background: #ef4444;
-        border: none;
-        color: white;
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 14px;
-        transition: 0.2s;
-    }
-
-    .btn-cancelar:hover {
-        background: #dc2626;
-    }
-
-    /* STATUS */
-
-    .badge-concluido {
-        background: #dcfce7;
-        color: #166534;
-        padding: 5px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-    }
-
-    /* EMPTY STATE */
-
-    .empty-state {
-        text-align: center;
-        color: #6b7280;
-        margin-top: 40px;
-    }
-
-    .empty-state i {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
-
-    /* ========================= */
-    /* 💻 DESKTOP AJUSTE */
-    /* ========================= */
-
-    @media (min-width:768px) {
-
-        .historico-card {
-            max-width: 300px;
-            width: 100%;
-        }
-
-        .historico-container {
-            max-width: 1000px;
-            margin: auto;
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-        }
-
-    }
-</style>
+                fetch(`/cancelar/${id}/`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'ok' && btnCancelar) {
+                            // Substitui o botão pela mensagem de confirmação
+                            btnCancelar.outerHTML = `
+                        <span class="badge-concluido text-danger" style="background: #ff00002e; padding: 6px 12px; border-radius: 999px; font-size: small;">
+                            <i class="fa fa-times-circle"></i> Cancelado
+                        </span>
+                    `;
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro ao cancelar:', err);
+                    });
+            });
+        });
+    });
+</script>
 {% endblock %}

@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from datetime import datetime
 from django.conf import settings
+from django.http import JsonResponse
 
 
 @login_required
@@ -58,6 +59,20 @@ def historico(request):
     }
 
     return render(request, "historico.html", context)
+
+
+@login_required
+def cancelar_agendamento(request, id):
+    agendamento = get_object_or_404(
+        Agendamento,
+        id=id,
+        usuario=request.user
+    )
+    agendamento.delete()
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'status': 'ok'})
+
+    return redirect("meus-agendamentos")
 
 
 @login_required
@@ -157,7 +172,7 @@ def index(request):
         # email.attach_alternative(html_content, "text/html")
         # email.send()
 
-        return redirect("meus-agendamentos")
+        return redirect("index")
 
     context = {
         "quadras": quadras,
@@ -166,7 +181,7 @@ def index(request):
     return render(request, "index.html", context)
 
 
-@login_required
+'''@login_required
 def cancelar_agendamento(request, id):
 
     agendamento = get_object_or_404(
@@ -213,7 +228,7 @@ def cancelar_agendamento(request, id):
 #     except:
 #         pass
 
-    return redirect("meus-agendamentos")
+    return redirect("meus-agendamentos")'''
 
 @login_required
 def horarios_disponiveis(request):
