@@ -35,9 +35,9 @@
                         Cancelar
                     </button>
                     {% else %}
-                    <span class="badge-concluido">
+                    <button class="badge-concluido ">
                         <i class="fa fa-check-circle"></i> Concluído
-                    </span>
+                    </button>
                     {% endif %}
                 </td>
             </tr>
@@ -148,9 +148,9 @@
                         const btnRow = document.getElementById('btn-row-' + id);
                         if (btnRow) {
                             btnRow.outerHTML = `
-                                <span class="badge-concluido text-danger" style="background: #ff00002e; padding: 6px 12px; border-radius: 999px; font-size: small;">
+                                <button class="badge-concluido text-danger" style="background: #ff00002e; padding: 6px 12px; border-radius: 999px; font-size: small;">
                                     <i class="fa fa-times-circle"></i> Cancelado
-                                </span>
+                                </button>
                             `;
                         }
 

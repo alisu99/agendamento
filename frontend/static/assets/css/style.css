@@ -22,14 +22,6 @@ body {
     }
 }
 
-/* NAVBAR */
-.navbar-custom {
-    background: linear-gradient(90deg, #ea580c, #f97316);
-    color: white;
-    padding: 14px 30px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-}
-
 .container-navbar {
     display: flex;
     justify-content: space-between;
@@ -386,6 +378,20 @@ body {
 
 }
 
+.navbar-custom {
+    background: linear-gradient(90deg, #ea580c, #f97316);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.1);
+
+}
 
 @media (max-width:768px) {
     .navbar-custom {

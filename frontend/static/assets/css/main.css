@@ -68,6 +68,7 @@
      border-radius: 10px;
      font-size: small;
      transition: 0.2s;
+     padding: 6px 12px;
  }
 
  .btn-cancelar:hover {
@@ -178,16 +179,6 @@
 
  }
 
- /* ========================= */
- /* 📱 HISTÓRICO MOBILE FIRST */
- /* ========================= */
-
- .historico-container {
-     display: flex;
-     flex-direction: column;
-     gap: 5px;
- }
-
  /* CARD */
 
  .historico-card {
@@ -224,11 +215,12 @@
  /* STATUS */
 
  .badge-concluido {
-    background: #dcfce7;
-    color: #166534;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: small;
+     background: #dcfce7;
+     color: #166534;
+     padding: 6px 12px;
+     border-radius: 999px;
+     font-size: small;
+     border: none;
  }
 
  /* EMPTY STATE */
@@ -261,6 +253,8 @@
          display: flex;
          flex-wrap: wrap;
          flex-direction: row;
+         justify-content: center;
+         gap: 5px;
      }
 
  }
