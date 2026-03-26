@@ -116,6 +116,11 @@
                 padding: 15px;
             }
         }
+
+        .no-transition {
+            transition: none !important;
+        }
+
     </style>
 </head>
 
@@ -176,6 +181,7 @@
         <a href="{% url 'agendamentos' %}">Agendamentos</a>
         <a href="{% url 'ajustes' %}">Ajustes</a>
         <a href="{% url 'usuarios' %}">Usuários</a>
+        <a href="{% url 'faturas' %}">Faturas</a>
         {% endif %}
 
         <a href="{% url 'meu-perfil' %}">Meu perfil</a>
@@ -248,8 +254,36 @@
         }
 
         function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("collapsed")
+            const sidebar = document.getElementById("sidebar")
+            sidebar.classList.toggle("collapsed")
+
+            if (sidebar.classList.contains("collapsed")) {
+                localStorage.setItem("sidebar", "collapsed")
+            } else {
+                localStorage.setItem("sidebar", "expanded")
+            }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const sidebar = document.getElementById("sidebar")
+            const content = document.getElementById("content")
+
+            sidebar.classList.add("no-transition")
+            content.classList.add("no-transition")
+
+            const savedState = localStorage.getItem("sidebar")
+
+            if (window.innerWidth > 768) {
+                if (savedState === "collapsed") {
+                    sidebar.classList.add("collapsed")
+                }
+            }
+
+            sidebar.offsetHeight
+
+            sidebar.classList.remove("no-transition")
+            content.classList.remove("no-transition")
+        })
     </script>
 
 </body>
